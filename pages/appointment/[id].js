@@ -6,6 +6,7 @@ const VideoCallComponent = dynamic(() => import('../../components/VideoCallCompo
 });
 export default function Appointment({ appointment }) {
     let [props,setProps] = useState(null);
+    let [tokenDetails,setTokenDetails] = useState(null);
     useEffect(() =>{
         if(appointment[0].length === 0){
             console.log("No appointment found")
@@ -34,12 +35,14 @@ export default function Appointment({ appointment }) {
             return result;
         }
         tokenExtractor().then((result) =>{
+            tokenDetails = result;
             if(result.type === "doctor" && result.id != queryData.doctor_id){
                 window.location.href = "/";
             }
             if(result.type === "patient" && result.id != queryData.patient_id){
                 window.location.href = "/"
             }
+            setTokenDetails(result);
             setProps(queryData);
         })
 
@@ -47,7 +50,7 @@ export default function Appointment({ appointment }) {
   return (
     <div>
 
-            {props && <VideoCallComponent  appointment_details={{...props}}/>}
+            {props && tokenDetails && <VideoCallComponent  appointment_details={{...props}} token_details={{...tokenDetails}}/>}
     </div>
   );
 }

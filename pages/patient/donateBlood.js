@@ -1,15 +1,14 @@
 import React, { useState , useEffect} from 'react';
-
-export default function BloodDonation(){
+import withAuth from '@/components/withAuth';
+function BloodDonation(props){
     const [result, setResult] = useState({});
-
+    console.log(props);
     useEffect(() => {
 
         const token = localStorage.getItem('token');
 
         if(!token){
-            alert("Please Login first!");
-            window.location.href = "/login";
+            window.location.href = "/";
         }
 
         const fetchData = async () => {
@@ -77,12 +76,12 @@ export default function BloodDonation(){
     return(
         <>
             <h1>Blood Donation Form</h1>
-            <p1>
+            <p>
                 If the person donating blood is somebody other than yourself,<br/>
                 please fill out the form.
-            </p1><br/><br/>
+            </p><br/><br/>
 
-            <form onSubmit={handleSubmit} autocomplete="off">
+            <form onSubmit={handleSubmit} autoComplete="off">
                 <input type="text" name="FName" defaultValue={result.Fname} placeholder="First Name"/><br/>
                 <input type="text" name="LName" defaultValue={result.Lname} placeholder="Last Name"/><br/>
                 <input type="text" name="PhoneNum" defaultValue={result.PhoneNum} placeholder="Phone Number"/><br/>
@@ -94,3 +93,5 @@ export default function BloodDonation(){
         </>
     );
 }
+
+export default withAuth(BloodDonation);

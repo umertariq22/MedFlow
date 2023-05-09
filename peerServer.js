@@ -3,7 +3,8 @@ const { PeerServer } = require('peer');
 const peerServer = PeerServer({
   port: 9000,
   path: '/myapp', 
-  allow_discovery: true 
+  allow_discovery: true,
+  expire_timeout:60000
 });
 
 peerServer.on('connection',(client) => {

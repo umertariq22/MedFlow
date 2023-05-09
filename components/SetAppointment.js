@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import Loader from "./Loader";
 const moment = require("moment");
 
-export default function SetAppointment({ timings,id,tokenDetails }) {
+export default function SetAppointment({ timings, id, tokenDetails }) {
   const days = [
     "Sunday",
     "Monday",
@@ -11,7 +12,17 @@ export default function SetAppointment({ timings,id,tokenDetails }) {
     "Friday",
     "Saturday",
   ];
+  const [loading, setLoading] = useState(true);
   const [timeSlots, setTimeSlots] = useState({
+    Sunday: [],
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+  });
+  const [bookedSlots, setBookedSlots] = useState({
     Sunday: [],
     Monday: [],
     Tuesday: [],
@@ -50,7 +61,7 @@ export default function SetAppointment({ timings,id,tokenDetails }) {
     let date = moment(
       `${nextDates[currentSelectedDay]} ${currentSelectedTime}`,
       "DD-MM-YY h:mm A"
-    ).format("DD-MM-YY HH:mm");
+    ).format("YYYY-MM-DD HH:mm");
     const res = await fetch("/api/patient/bookAppointment", {
       method: "POST",
       headers: {
@@ -60,13 +71,35 @@ export default function SetAppointment({ timings,id,tokenDetails }) {
         doctor_id: Number(id),
         patient_id: Number(tokenDetails.id),
         appointment_date: date,
-      })
+      }),
     });
     const result = await res.json();
     alert(result.message);
   };
+
+  const getBookedSlots = async (in_date) => {
+    let date_text = in_date.format("YYYY-MM-DD");
+    const res = await fetch("/api/getDoctorAvailable", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        doctor_id: Number(id),
+        date: date_text,
+      }),
+    });
+    const result = await res.json();
+    if (result[0].length != 0) {
+      setBookedSlots((prev) => ({
+        ...prev,
+        [in_date.format("dddd")]: result[0].map((item) => item.Time),
+      }));
+    }
+    return result[0];
+  };
+
   useEffect(() => {
-    console.log(id,tokenDetails.id)
     timings = timings.sort((a, b) => {
       return days.indexOf(a.timing_day) - days.indexOf(b.timing_day);
     });
@@ -79,6 +112,9 @@ export default function SetAppointment({ timings,id,tokenDetails }) {
         if (moment().isAfter(nextTargetDay)) {
           nextTargetDay.add(1, "week");
         }
+
+        getBookedSlots(nextTargetDay).then((result) => {});
+
         setNextDates((prev) => ({
           ...prev,
           [timing.timing_day]: nextTargetDay.format("DD-MM-YY"),
@@ -98,16 +134,26 @@ export default function SetAppointment({ timings,id,tokenDetails }) {
         }));
       });
     }
+    setLoading(false);
   }, []);
   const showTimeSlots = (id) => {
     const day = id;
     const timeSlotsDiv = document.getElementById(day);
+    let booked = [];
+    bookedSlots[day].map((slot) => {
+      console.log(slot);
+      booked.push(moment(slot.Time, "HH:mm").format("h:mm A"));
+    });
     if (timeSlotsDiv == null) {
       return;
     }
     const timeSlotsButtons = timeSlotsDiv.getElementsByTagName("button");
     for (let i = 0; i < timeSlotsButtons.length; i++) {
       timeSlotsButtons[i].style.display = "inline-block";
+      if (booked.includes(timeSlotsButtons[i].innerHTML)) {
+        timeSlotsButtons[i].disabled = true;
+        timeSlotsButtons[i].style.backgroundColor = "red";
+      }
     }
   };
   const hideTimeSlots = (id) => {
@@ -121,9 +167,26 @@ export default function SetAppointment({ timings,id,tokenDetails }) {
       timeSlotsButtons[i].style.display = "none";
     }
   };
+
+  useEffect(() => {
+    let buttons = document.getElementById(currentSelectedDay)?.children;
+    if(buttons){
+      for(let button of buttons){
+        bookedSlots[currentSelectedDay].map((slot) => {
+        let inner = moment(slot, "HH:mm ").format("HH:mm A");
+        if(inner.includes(button.innerHTML)){
+          button.disabled = true;
+          button.style.backgroundColor = "red";
+        }
+      }
+  )}
+    }
+  
+  },[bookedSlots])
   return (
     <>
-      {timings.length == 0 ? (
+      {loading && <Loader />}
+      {timings.length == 0 && !loading ? (
         <h1>Timing Not Found</h1>
       ) : (
         timings.map((timing, index) => {

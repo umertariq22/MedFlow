@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         return;
     }
     const {doctor_id,patient_id,appointment_date} = req.body;
-    const query = `INSERT INTO Appointment (doctor_id,patient_id,appointment_date) VALUES (${doctor_id},${patient_id},'${appointment_date}')`;
+    const query = `INSERT INTO Appointment (doctor_id,patient_id,appointment_date,status) VALUES (${doctor_id},${patient_id},'${appointment_date}','Pending')`;
     console.log(query)
     const result = await ExecuteQuery(query);
     res.status(200).json({message: "Appointment booked"});

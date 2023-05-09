@@ -1,15 +1,16 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-import { useEffect } from 'react'
+import { Html, Head, Main, NextScript } from "next/document";
+import NavBar from "@/components/NavBar";
 
 export default function Document() {
   return (
     <Html lang="en">
-      <Head >
+      <Head>
       </Head>
       <body>
+        {/* <NavBar/> */}
         <Main />
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }

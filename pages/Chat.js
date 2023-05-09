@@ -7,7 +7,6 @@ export default function Chat() {
     const [username, setUsername] = useState('');
     useEffect(() => {
         initializeSocket();
-
         return () => {
             if(socket) {
                 socket.off('message');
@@ -17,7 +16,7 @@ export default function Chat() {
 
     const initializeSocket = async () => {
         await fetch('/api/Socket');
-        socket = io();
+        socket = io(id);
 
         socket.on('message',(msg) => {
             setMessages((oldMsgs) => {

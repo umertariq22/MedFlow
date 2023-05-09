@@ -12,6 +12,22 @@ export default function Socket(req, res) {
         socket.broadcast.emit('message', data);
       });
 
+      socket.on("callUser",(data) =>{
+        let id = data.to;
+        let from = data.from;
+        socket.to(id).emit("callUser", data);
+      })
+
+      socket.on("answerCall",(data) =>{
+        let id = data.to;
+        socket.to(id).emit("callAccepted", data);
+      })
+
+      socket.on("disconnectCall",(data) =>{
+        let id = data.to;
+        socket.to(id).emit("callEnded", data);
+      })
+
       socket.on('disconnect', () => {
         console.log('Client disconnected');
       });

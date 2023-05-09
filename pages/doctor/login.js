@@ -57,20 +57,14 @@ export default function LogInPatient(){
     }
     return(
         <>
+            <div className='container mt-4'>
+                <h1 className='display-4'>Login</h1>
             <form onSubmit={handleSubmit} autoComplete="off">
-                <input type = "email" name="PEmail" placeholder="Email"/>
-                <br/>
-                <input type="password" name="PPassword" placeholder="Password"/>
-                <br/>
-                <input type="submit" value="Submit"/><br/>
-                <input type="button" value="Forgot Password?" onClick={
-                    () => window.location.href = '/forgot-password'
-                    } />
-                <input type="button" value="Sign Up"/><br/>
-                <input type="button" value="Visitor?" onClick={
-                    () => (window.location.href = "/MainPage/mainpagepatient")
-                }/>
+                <input type = "email" name="PEmail" placeholder="Email" className='form-control mb-1'/>
+                <input type="password" name="PPassword" placeholder="Password" className='form-control mb-1'/>
+                <input type="submit" value="Submit" className='btn btn-primary'/>
             </form>
+            </div>
         </>
     );
 }

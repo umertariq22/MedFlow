@@ -14,8 +14,7 @@ export default function Appointment({ appointment }) {
     }
     if (
       appointment[0][0].status === "Cancelled" ||
-      appointment[0][0].status === "Completed" ||
-      appointment[0][0].status === "Pending"
+      appointment[0][0].status === "Completed"
     ) {
       console.log("Appointment cancelled");
       window.location.href = "/";

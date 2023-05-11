@@ -11,6 +11,7 @@ export default function Doctor({ doctor, timings, id }) {
   const [specialization, setSpecialization] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [description, setDescription] = useState("");
   const [tokenDetails, setTokenDetails] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -24,6 +25,7 @@ export default function Doctor({ doctor, timings, id }) {
     setSpecialization(data[0].specialization);
     setEmail(data[0].email);
     setAddress(data[0].address);
+    setDescription(data[0].description)
 
     tokenExtractor().then((data) => {
       setTokenDetails(data);
@@ -41,6 +43,7 @@ export default function Doctor({ doctor, timings, id }) {
           <h2>{specialization}</h2>
           <h3>{email}</h3>
           <h3>{address}</h3>
+          <p>{description}</p>
           {!tokenDetails && (
             <div>
               <p>You need to be logged in to book an appointment</p>

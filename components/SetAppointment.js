@@ -103,7 +103,7 @@ export default function SetAppointment({ timings, id, tokenDetails }) {
     timings = timings.sort((a, b) => {
       return days.indexOf(a.timing_day) - days.indexOf(b.timing_day);
     });
-    if (timings[0].length != 0) {
+    if (timings[0]?.length != 0) {
       timings.map((timing, index) => {
         if (index == 0) {
           setCurrentSelectedDay(timing.timing_day);
@@ -170,19 +170,18 @@ export default function SetAppointment({ timings, id, tokenDetails }) {
 
   useEffect(() => {
     let buttons = document.getElementById(currentSelectedDay)?.children;
-    if(buttons){
-      for(let button of buttons){
+    if (buttons) {
+      for (let button of buttons) {
         bookedSlots[currentSelectedDay].map((slot) => {
-        let inner = moment(slot, "HH:mm ").format("HH:mm A");
-        if(inner.includes(button.innerHTML)){
-          button.disabled = true;
-          button.style.backgroundColor = "red";
-        }
+          let inner = moment(slot, "HH:mm ").format("HH:mm A");
+          if (inner.includes(button.innerHTML)) {
+            button.disabled = true;
+            button.style.backgroundColor = "red";
+          }
+        });
       }
-  )}
     }
-  
-  },[bookedSlots])
+  }, [bookedSlots]);
   return (
     <>
       {loading && <Loader />}
@@ -208,11 +207,11 @@ export default function SetAppointment({ timings, id, tokenDetails }) {
                   );
                 })}
               </div>
+              <button onClick={bookAppointment}>Book Appointment</button>
             </div>
           );
         })
       )}
-      <button onClick={bookAppointment}>Book Appointment</button>
     </>
   );
 }

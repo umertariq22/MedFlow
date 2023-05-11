@@ -1,7 +1,7 @@
 import { useEffect ,useState} from "react";
-import withAuth from "@/components/withAuth";
+import withDoctorAuth from "@/components/withDoctorAuth";
 
-function AddTimings(tokenDetails){
+function AddTimings({tokenDetails,setActive}){
     const [timings,setTimings] = useState([]);
 
     const addTimings = async(e) =>{
@@ -38,9 +38,10 @@ function AddTimings(tokenDetails){
     
 
     useEffect(() => {
-        if(tokenDetails.type == "patient"){
+        if(tokenDetails?.type == "patient"){
             window.location.href = "/";
         }
+        setActive("settimings");
         const timings = fetch(`/api/doctor/getTimings`,{
             method:"POST",
             body:JSON.stringify({
@@ -107,4 +108,4 @@ function AddTimings(tokenDetails){
     </>);
 }
 
-export default withAuth(AddTimings)
+export default withDoctorAuth(AddTimings)

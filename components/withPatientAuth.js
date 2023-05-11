@@ -54,7 +54,7 @@ export default function WithPatientAuth(WrappedComponent) {
         {tokenDetails && isPatient && (
           <div className="row m-0">
             <div
-              className="d-flex flex-column flex-shrink-0 p-3 bg-light vh-100 col-sm-2_5 p-0"
+              className="d-flex flex-column flex-shrink-0 p-3 bg-light vh-100 col-sm-2_5 p-0 position-sticky"
               
             >
               <a
@@ -65,13 +65,8 @@ export default function WithPatientAuth(WrappedComponent) {
               </a>
               <hr />
               <ul className="nav nav-pills flex-column mb-auto">
-                <li className="nav-item">
-                  <a href="/patient" className="nav-link link-dark" id="dashboard">
-                    Dashboard
-                  </a>
-                </li>
                 <li>
-                  <a href="#" className="nav-link link-dark" id="browse_doctor">
+                  <a href="/patient/viewdoctors" className="nav-link link-dark" id="browse_doctor">
                     Browse Doctors
                   </a>
                 </li>
@@ -79,12 +74,6 @@ export default function WithPatientAuth(WrappedComponent) {
                   <a href="/patient/viewappointment" className="nav-link link-dark" id="manage_appt">
                     
                     Manage Appointments
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="nav-link link-dark" id="view_pres">
-                    
-                    View Prescriptions
                   </a>
                 </li>
                 <li>
@@ -108,11 +97,6 @@ export default function WithPatientAuth(WrappedComponent) {
                   <li>
                     <a className="dropdown-item" href="/logout">
                       Log Out
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Update Profile
                     </a>
                   </li>
                 </ul>

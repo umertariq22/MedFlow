@@ -6,7 +6,8 @@ export default async function handler(req, res) {
                     Address,
                     PhoneNum,
                     email,
-                    specialization FROM Doctor WHERE email = '${req.body.email}'`;
+                    specialization,
+                    description FROM Doctor WHERE email = '${req.body.email}'`;
     let output = ExecuteQuery(query);
     output.then(async function(result){
         res.json(result);

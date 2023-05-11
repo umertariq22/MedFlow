@@ -60,20 +60,6 @@ export default function withDoctorAuth(WrappedComponent) {
               </a>
               <hr />
               <ul className="nav nav-pills flex-column mb-auto">
-                <li className="nav-item">
-                  <a
-                    href="/doctor"
-                    className="nav-link link-dark"
-                    id="dashboard"
-                  >
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="nav-link link-dark" id="browse_doctor">
-                    Browse Doctors
-                  </a>
-                </li>
                 <li>
                   <a
                     href="/doctor/viewappointment"
@@ -84,13 +70,8 @@ export default function withDoctorAuth(WrappedComponent) {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="nav-link link-dark" id="view_pres">
-                    View Prescriptions
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="nav-link link-dark" id="donate_blood">
-                    Donate Blood
+                  <a href="/doctor/settimings" className="nav-link link-dark" id="settimings">
+                    Set Timings
                   </a>
                 </li>
               </ul>
@@ -110,11 +91,11 @@ export default function withDoctorAuth(WrappedComponent) {
                       Log Out
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a className="dropdown-item" href="#">
                       Update Profile
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>

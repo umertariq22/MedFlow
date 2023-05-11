@@ -49,7 +49,7 @@ export default function LogInPatient(){
         let result = await res.json();
         if(result['token']){
             localStorage.setItem("token", result['token']);
-            window.location.href = "/";
+            window.location.href = "/patient/viewappointment";
             
         } else{
             alert("Wrong Email or Password");

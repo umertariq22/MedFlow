@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-
-export default function MainPage() {
+import withNavbar from "@/components/withNavbar";
+function MainPage() {
   return (
     <>
       
     </>
   );
 }
+
+export default withNavbar(MainPage);

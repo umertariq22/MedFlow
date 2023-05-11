@@ -23,6 +23,7 @@ export default function SignUpDoctor() {
       spec: "Specialization",
       desc: "Description",
       lname: "Last Name",
+      degree: "Degree",
     };
 
     Object.keys(formFields).forEach((key) => {
@@ -68,7 +69,7 @@ export default function SignUpDoctor() {
       phone: e.target.phone.value,
       spec: e.target.spec.value,
       desc: e.target.desc.value,
-      PType: "Doctor",
+      degree: e.target.degree.value,
     });
 
     let res = await fetch("/api/doctor/signup", {
@@ -271,6 +272,17 @@ export default function SignUpDoctor() {
                   <p className=" mb-0">Max 300 characters</p>
                   {errors.desc && (
                     <p className="ps-2 text-danger m-0">{errors.desc}</p>
+                  )}
+                </div>
+                <div className="mb-3 row">
+                  <input
+                    type="text"
+                    name="degree"
+                    placeholder="Degree Information"
+                    className="form-control form-control-lg"
+                  />
+                  {errors.degree && (
+                    <p className="ps-2 text-danger m-0">{errors.degree}</p>
                   )}
                 </div>
                 <div className="mb-3 row">

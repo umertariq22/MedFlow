@@ -11,7 +11,7 @@ export default function withDoctorAuth(WrappedComponent) {
       async function check() {
         const token = localStorage.getItem("token");
         if (!token) {
-          window.location.href = "/doctor/login";
+          window.location.href = "/";
         } else {
           const isValid = await fetch("/api/validateToken", {
             method: "POST",
@@ -28,7 +28,7 @@ export default function withDoctorAuth(WrappedComponent) {
             setIsDoctor(true);
           } else {
             setIsDoctor(false);
-            window.location.href = "/doctor/login";
+            window.location.href = "/login";
           }
         }
       }

@@ -9,12 +9,12 @@ export default async function handler(req, res){
 
             if(result[0].length == 0){
                 query = `INSERT INTO Patient(first_name,last_name,date_of_birth,gender,address,phone_number,email,password,blood_type) VALUES(
-                    '${req.body.Fname}',
-                    '${req.body.Lname}',
+                    '${req.body.fname}',
+                    '${req.body.lname}',
                     '${req.body.DOB}',
                     '${req.body.gender}',
                     '${req.body.address}',
-                    '${req.body.phone_num}',
+                    '${req.body.phone}',
                     '${req.body.email}',
                     '${req.body.password}',
                     '${req.body.bloodtype}');`;

@@ -28,7 +28,7 @@ export default function WithPatientAuth(WrappedComponent) {
             setIsPatient(true);
           } else {
             setIsPatient(false);
-            window.location.href = "/patient/login";
+            window.location.href = "/";
           }
         }
       }

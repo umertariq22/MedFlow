@@ -47,7 +47,7 @@ export default function Doctor({ doctor, timings, id }) {
           {!tokenDetails && (
             <div>
               <p>You need to be logged in to book an appointment</p>
-              <a href="/patient/login">Login</a>
+              <a href="/login">Login</a>
               <p>If account does not exist</p>
               <a href="/patient/signup">Register</a>
             </div>
@@ -57,7 +57,7 @@ export default function Doctor({ doctor, timings, id }) {
               <p>
                 You need to be logged in as a patient to book an appointment
               </p>
-              <a href="/patient/login">Login</a>
+              <a href="/login">Login</a>
               <p>If account does not exist</p>
               <a href="/patient/signup">Register</a>
             </div>

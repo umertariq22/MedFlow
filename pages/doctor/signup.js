@@ -5,8 +5,10 @@ import {
   validatePassword,
   validatePhone,
 } from "@/scripts/validator";
+import withNavbar from "@/components/withNavbar";
 const bcrypt = require("bcryptjs");
-export default function SignUpDoctor() {
+
+function SignUpDoctor() {
   const [specializations, setSpecializations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({});
@@ -24,6 +26,8 @@ export default function SignUpDoctor() {
       desc: "Description",
       lname: "Last Name",
       degree: "Degree",
+      exp: "Experience",
+      fee: "Charges",
     };
 
     Object.keys(formFields).forEach((key) => {
@@ -70,6 +74,8 @@ export default function SignUpDoctor() {
       spec: e.target.spec.value,
       desc: e.target.desc.value,
       degree: e.target.degree.value,
+      exp: e.target.exp.value,
+      fee: e.target.fee.value,
     });
 
     let res = await fetch("/api/doctor/signup", {
@@ -82,10 +88,10 @@ export default function SignUpDoctor() {
 
     let result = await res.json();
     if (result) {
-      window.location.href = "/doctor/login";
+      window.location.href = "/";
     } else {
       alert("Email already exists");
-      window.location.href = "/doctor/login";
+      window.location.href = "/";
     }
   }
 
@@ -286,6 +292,30 @@ export default function SignUpDoctor() {
                   )}
                 </div>
                 <div className="mb-3 row">
+                  <input
+                    type="text"
+                    name="exp"
+                    placeholder="Experience"
+                    className="form-control form-control-lg"
+                    pattern="[0-9]+"
+                  />
+                  {errors.exp && (
+                    <p className="ps-2 text-danger m-0">{errors.exp}</p>
+                  )}
+                </div>
+                <div className="mb-3 row">
+                  <input
+                    type="text"
+                    name="fee"
+                    placeholder="Charges"
+                    className="form-control form-control-lg"
+                    pattern="[0-9]+"
+                  />
+                  {errors.fee && (
+                    <p className="ps-2 text-danger m-0">{errors.fee}</p>
+                  )}
+                </div>
+                <div className="mb-3 row">
                   <div className="d-grid col-sm-3 ps-0">
                     <input
                       type="submit"
@@ -302,3 +332,5 @@ export default function SignUpDoctor() {
     </>
   );
 }
+
+export default withNavbar(SignUpDoctor);

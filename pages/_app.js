@@ -10,6 +10,8 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>MedFlow</title>
+        <link rel="icon" href="/fav.svg" type="image/svg+xml"/>
       </Head>
 
       <Component {...pageProps} />

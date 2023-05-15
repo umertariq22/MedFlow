@@ -3,8 +3,9 @@ import tokenExtractor from "@/scripts/token";
 import { useEffect, useState } from "react";
 const moment = require("moment");
 import Loader from "@/components/Loader";
+import NavBar from "@/components/NavBar";
 
-export default function Doctor({ doctor, timings, id }) {
+export default function Doctor({ doctor, timings, id, specializations }) {
   let data = doctor[0];
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -22,10 +23,10 @@ export default function Doctor({ doctor, timings, id }) {
     }
     setFname(data[0].first_name);
     setLname(data[0].last_name);
-    setSpecialization(data[0].specialization);
+    setSpecialization(specializations[data[0].specialization].spec_name);
     setEmail(data[0].email);
     setAddress(data[0].address);
-    setDescription(data[0].description)
+    setDescription(data[0].description);
 
     tokenExtractor().then((data) => {
       setTokenDetails(data);
@@ -36,43 +37,44 @@ export default function Doctor({ doctor, timings, id }) {
     <>
       {!isLoaded && <Loader />}
       {isLoaded && (
-        <div>
-          <h1>
-            {fname} {lname}
-          </h1>
-          <h2>{specialization}</h2>
-          <h3>{email}</h3>
-          <h3>{address}</h3>
-          <p>{description}</p>
-          {!tokenDetails && (
-            <div>
-              <p>You need to be logged in to book an appointment</p>
-              <a href="/login">Login</a>
-              <p>If account does not exist</p>
-              <a href="/patient/signup">Register</a>
-            </div>
-          )}
-          {tokenDetails && tokenDetails.type == "doctor" && (
-            <div>
-              <p>
-                You need to be logged in as a patient to book an appointment
-              </p>
-              <a href="/login">Login</a>
-              <p>If account does not exist</p>
-              <a href="/patient/signup">Register</a>
-            </div>
-          )}
-          {tokenDetails && tokenDetails.type == "patient" && (
-            <>
-              <h3>Timings</h3>
-              <SetAppointment
-                timings={timings}
-                id={id}
-                tokenDetails={tokenDetails}
-              />
-            </>
-          )}
-        </div>
+        <>
+          <NavBar />
+          <div className="container mt-3">
+            <h1 className="display-4">
+              {fname} {lname}
+            </h1>
+            <h2>{specialization}</h2>
+            <p>{description}</p>
+            {!tokenDetails && (
+              <div>
+                <p>You need to be logged in to book an appointment</p>
+                <a href="/login">Login</a>
+                <p>If account does not exist</p>
+                <a href="/patient/signup">Register</a>
+              </div>
+            )}
+            {tokenDetails && tokenDetails.type == "doctor" && (
+              <div>
+                <p>
+                  You need to be logged in as a patient to book an appointment
+                </p>
+                <a href="/login">Login</a>
+                <p>If account does not exist</p>
+                <a href="/patient/signup">Register</a>
+              </div>
+            )}
+            {tokenDetails && tokenDetails.type == "patient" && (
+              <>
+                <h3>Timings</h3>
+                <SetAppointment
+                  timings={timings}
+                  id={id}
+                  tokenDetails={tokenDetails}
+                />
+              </>
+            )}
+          </div>
+        </>
       )}
     </>
   );
@@ -97,11 +99,19 @@ export async function getServerSideProps(context) {
     }
   );
   let timings = await timingsRequest.json();
+  const specializationsRequest = await fetch(
+    `http://localhost:3000/api/getSpecializations`,
+    {
+      method: "POST",
+    }
+  );
+  let specializations = await specializationsRequest.json();
   return {
     props: {
       doctor,
       timings,
       id,
+      specializations: specializations[0],
     },
   };
 }

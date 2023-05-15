@@ -19,7 +19,7 @@ function ViewDoctors({ tokenDetails, setActive }) {
       {doctors && (
         <>
           <div className="container">
-            <h1 className="display-4">Doctors</h1>
+            <h1 className="display-4 mt-3 mb-3">Doctors</h1>
             <div className="row">
               {doctors.map((doctor) => (
                 <div className="col-sm-4 mb-4">

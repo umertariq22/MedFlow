@@ -85,9 +85,9 @@ function SignUpPatient() {
   }
   return (
     <>
-      <div className="container">
-        <h1 className="display-4 mt-4 ">Signup</h1>
-        <form autoComplete="off" onSubmit={handleSubmit}>
+      <div className="container" style={{maxWidth:"500px"}}>
+        <form autoComplete="off" onSubmit={handleSubmit} style={{maxWidth:"400px"}} className="text-center">
+        <h1 className="display-4 mt-4 text-center">Signup</h1>
           <div className="row mb-3">
             <input
               type="text"

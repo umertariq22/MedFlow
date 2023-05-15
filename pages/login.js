@@ -32,7 +32,7 @@ function LoginPage() {
     .then(data => {
       if(data.token){
         localStorage.setItem("token",data.token);
-        window.location.href = selected == "patient" ? "/patient/viewappointment" : "/doctor/viewappointment";
+        window.location.href = selected == "patient" ? "/patient/" : "/doctor/viewappointment";
       }else{
         if(!data){
           setLoginError("Invalid Credentials");
